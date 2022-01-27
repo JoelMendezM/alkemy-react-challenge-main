@@ -9,8 +9,6 @@ export const Home = () => {
     getDishes()
       .then((res) => {
         setDishes(res);
-        console.log(res, 'res')
-      
       })
       .catch((error) => {
         //MANEJAR ERROR
