@@ -12,8 +12,7 @@ export const Item = ( {dishes} ) => {
             <img src={dishes.image} className="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">{dishes.title}</h5>
-              <NavLink to="/home" className="btn btn-primary">Ver detalle</NavLink>
-              <NavLink to="/home" className="btn btn-primary">Eliminar del menú</NavLink>
+              <NavLink to="/home" className="btn btn-primary">Añadir al menú</NavLink>
             </div>
           </CardDish>
         </div>

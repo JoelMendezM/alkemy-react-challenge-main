@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { SearchFormContainer } from '../StyleComponents/Style';
 import { getDishes } from '../../services/items'
 import { Item } from '../Item/Item'
+import { Home } from '../Home/Home'
 
 export const DishesSearch = () => {
   const [foundDishes, setFoundDishes] = useState([]);
@@ -71,14 +72,9 @@ export const DishesSearch = () => {
               onChange={handleChange}/>
             </SearchFormContainer>
 
-            {console.log('Testing :>> ', foundDishes)}
-            {
-
-            values.searchValue.length >= 2 ?
-            <Item dishes={foundDishes}/>
-              :
-                <p>Debe ingresar al menos dos caracteres para iniciar la búsqueda</p>
-                
+            {values.searchValue.length >= 2 ?
+              <Item dishes={foundDishes}/> :
+              <Home />
             }
           </div>
         )}
