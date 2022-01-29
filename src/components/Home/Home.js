@@ -1,44 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { getDishes } from '../../services/items';
+import React, { useEffect } from 'react';
 import { ItemsContainer } from '../ItemsContainer/ItemsContainer';
+import { Instructions } from '../Instructions/Instructions';
+import { Menu } from '../Menu/Menu';
+import { DishesSearch } from '../DishesSearch/DishesSearch';
+import { useMenu } from '../../context/MenuContext';
+import { useNavigate } from 'react-router-dom';
+
 
 export const Home = () => {
-  const [dishes, setDishes] = useState('')
-  const data = [
-    {
-      id: 0,
-      title: 'Cauliflower, Brown Rice',
-      image: 'pic1'
-    },
-    {
-      id: 2,
-      title: 'Homemade Garlic and',
-      image: 'pic2'
-    },
-    {
-      id: 3,
-      title: 'Berry Banana Breakfast',
-      image: 'pic3'
-    },
-    {
-      id: 4,
-      title: 'Garlicky Kale',
-      image: 'pic4'
-    }
-  ]
+  const { getDishesList, dishesList } = useMenu();
+  const isUserLogged = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getDishes()
-      .then((res) => {
-        setDishes(res);
-      })
-      .catch((error) => {
-      })
+    if(!isUserLogged) {
+      navigate('/login');
+    }
+
+    getDishesList();
   }, []);
+  
 
   return (
     <>
-      <ItemsContainer dishes={data}/>
+       <Instructions />
+       <Menu/>
+       <h1 style={{margin: "1rem"}}>Platos disponibles:</h1>
+      <DishesSearch/>
+      {dishesList.length >= 1 && <ItemsContainer dishes={dishesList}/>}
     </>
   )
 };
