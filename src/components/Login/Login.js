@@ -14,7 +14,7 @@ export const Login = () => {
 
   const handleLogin = () => {
     setProcessingLogin(true);
-    //
+    
       axios
         .post('http://challenge-react.alkemy.org/', {
           email: email,
@@ -76,7 +76,7 @@ export const Login = () => {
               </p>
             </div>
             <form className="container" onSubmit={handleSubmit}>
-              <div className="mb-3">
+              <div>
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Email
                 </label>
@@ -91,9 +91,9 @@ export const Login = () => {
                   onBlur={handleBlur}
                 />
               </div>
-              {touched.email && errors.email && <div>{errors.email}</div>}
-              <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">
+              {touched.email && errors.email && <p className='m-0 ms-2 text-danger'>{errors.email}</p>}
+              <div>
+                <label htmlFor="exampleInputPassword1" className="form-label mt-2">
                   Password
                 </label>
                 <input
@@ -106,9 +106,9 @@ export const Login = () => {
                   onBlur={handleBlur}
                 />
               </div>
-              {touched.password && errors.password && <div>{errors.password}</div>}
+              {touched.password && errors.password && <p className='m-0 ms-2 text-danger'>{errors.password}</p>}
               <Container>
-                <button type="submit" className="btn btn-primary" disabled={processingLogin}>
+                <button type="submit" className="btn btn-primary mt-2" disabled={processingLogin}>
                   Enviar
                 </button>
                 {processingLogin && <Spinner className="spinner-border" role="status">
