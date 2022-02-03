@@ -18,7 +18,10 @@ export const Menu = () => {
       </> :
       <>
         <h1>MENU:</h1>
-        <Item dishes={menu} key={menu.id}/>
+        <Item dishes={menu} 
+        key={menu.id} 
+        disapeartButton={{'d-none': false}} 
+        appearButton={{'d-none': true}}/>
       </>
     }
     </MenuContainer>

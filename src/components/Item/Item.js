@@ -1,9 +1,14 @@
 import React from 'react';
 import { useMenu } from '../../context/MenuContext';
 import { DishesContainer, CardDish, Button } from '../StyleComponents/Style';
+import className from 'classnames';
 
-export const Item = ( {dishes} ) => {
+export const Item = ( {dishes, appearButton = {'d-none': false}, disapeartButton = {'d-none': true}} ) => {
   const { onAddToMenu, removeDish } = useMenu();
+
+  const wraperrClassesDetailButton = className('btn btn-primary', disapeartButton);
+  const wraperrClassesDeleteButton = className('btn btn-danger', disapeartButton);
+  const wraperrClassesAddMenuButton = className('btn btn-primary', appearButton);
 
   return (
     <>
@@ -17,9 +22,9 @@ export const Item = ( {dishes} ) => {
                   <p className="card-text"><b>Apto vegano: </b>{dishes.vengan === true ? 'si' : 'no'}</p>
                   <p className="card-text"><b>Vegetariano: </b>{dishes.vegetarian === true ? 'si' : 'no'}</p>
                   <p className="card-text"><b>Apto celíaco: </b>{dishes.glutenFree === true ? 'si' : 'no'}</p>
-                  <Button className="btn btn-primary">Detalle del plato</Button>
-                  <Button className="btn btn-danger" onClick={() => removeDish()}>Eliminar</Button>
-                  <Button className="btn btn-primary" onClick={() => onAddToMenu(dishes)}>Añadir al menú</Button>
+                  <Button className={wraperrClassesDetailButton}>Detalle del plato</Button>
+                  <Button className={wraperrClassesDeleteButton} onClick={() => removeDish()}>Eliminar</Button>
+                  <Button className={wraperrClassesAddMenuButton} onClick={() => onAddToMenu(dishes)}>Añadir al menú</Button>
                 </div>
               </CardDish>
             </div>
