@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { LogOut } from '../LogOut/LogOut';
 
 export const NavBar = () => {
+  const [isLogged, setIsLogged] = useState(localStorage.getItem('token'));
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,9 +27,13 @@ export const NavBar = () => {
               <NavLink className="nav-link" aria-current="page" to="/">
                 Home
               </NavLink>
+              { !isLogged ?
+                <LogOut/>
+              : 
               <NavLink className="nav-link" to="/login">
                 Login
               </NavLink>
+              }
             </div>
           </div>
         </div>

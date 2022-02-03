@@ -23,13 +23,12 @@ export const Login = () => {
         .then(function (response) {
           localStorage.setItem('token', response.data.token);
           navigate('/');
-
         })
         .catch(function (error) {
           if (!(email === 'challenge@alkemy.org') && !(password === 'react')) {
             swal(
               '¡ERROR! email y/o password inválido',
-              'Por favor introduzca el email y/o password correctamente'
+              'Por favor introduzca un email y/o password autorizado para el login'
             );
           }
           setProcessingLogin(false);
