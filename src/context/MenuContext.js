@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import swal from 'sweetalert';
-import { getDishes, searchDishes } from '../services/items';
+import { getDishes, searchDishes, getDish } from '../services/items';
 
 const MenuContext = React.createContext();
 
@@ -15,6 +15,7 @@ const useMenu = () => {
 const MenuProvider = ({children}) => {
   const [menu, setMenu] = useState([]);
   const [dishesList, setDishesList] = useState([]);
+  const [dish, setDish] = useState([]);
   
 
   if (menu.length >= 5) {
@@ -39,6 +40,14 @@ const MenuProvider = ({children}) => {
       })
   }
 
+  const getDishById = (id) => {
+    getDish(id)
+      .then((res) => {
+        console.log('res :>> ', res);
+        setDish(res);
+      })
+  }
+
   const onAddToMenu = (dishes) => {
     const dishAddToMenu = {
         id: dishes.id,
@@ -50,6 +59,7 @@ const MenuProvider = ({children}) => {
         price: dishes.pricePerServing,
         timePreparation: dishes.readyInMinutes,
         healthScore: dishes.healthScore,
+        summary: dishes.summary
       }
 
     setMenu((previousState) => [...previousState, dishAddToMenu]);
@@ -72,7 +82,9 @@ const MenuProvider = ({children}) => {
         removeDish,
         dishesList,
         getDishesList,
-        searchDishesByQuery
+        searchDishesByQuery,
+        getDishById,
+        dish
         }}>
         {children}
       </MenuContext.Provider>
