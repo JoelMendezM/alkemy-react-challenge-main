@@ -28,7 +28,7 @@ export async function getDish(id) {
     const response = await axios.get(
       `https://api.spoonacular.com/recipes/${id}/information?apiKey=e5efa520d806449eb6185b9de8fdcf64&includeNutrition=false`
     );
-    return response.data.results;
+    return response.data;
   } catch (error) {
     console.error(error);
   }

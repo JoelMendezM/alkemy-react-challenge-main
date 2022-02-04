@@ -43,7 +43,6 @@ const MenuProvider = ({children}) => {
   const getDishById = (id) => {
     getDish(id)
       .then((res) => {
-        console.log('res :>> ', res);
         setDish(res);
       })
   }
