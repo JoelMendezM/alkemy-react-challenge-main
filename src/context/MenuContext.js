@@ -15,7 +15,9 @@ const useMenu = () => {
 const MenuProvider = ({children}) => {
   const [menu, setMenu] = useState([]);
   const [dishesList, setDishesList] = useState([]);
+  const [averagePrice, setAveragePrice] = useState(0);
   
+  console.log('menu :>> ', menu);
 
   if (menu.length >= 5) {
     swal(
@@ -37,6 +39,45 @@ const MenuProvider = ({children}) => {
       .then((res) => {
         setDishesList(res);
       })
+  }
+
+  const averageMenuPrice = () => {
+    let menuPrice = 0;
+    let quantityItems = 0;
+      menuPrice = menu.map((item) => {
+        console.log('item.price :>> ', item.price);
+        quantityItems = quantityItems + 1;
+        menuPrice = menuPrice + item.price;
+        let average = menuPrice / quantityItems;
+        console.log('average :>> ', average);
+
+      return average
+    })
+  }
+  const averageMenuPreparation = () => {
+    let menuTimePreparation = 0;
+    let quantityItems = 0;
+    menuTimePreparation = menu.map((item) => {
+        console.log('item.price :>> ', item.timePreparation);
+        quantityItems = quantityItems + 1;
+        menuTimePreparation = menuTimePreparation + item.timePreparation;
+        let average = menuTimePreparation / quantityItems;
+        console.log('average :>> ', average);
+
+      return average
+    })
+  }
+  const averageMenuHealthScore = () => {
+    let menuHealthScore = 0;
+    let quantityItems = 0;
+      menuHealthScore = menu.map((item) => {
+        quantityItems = quantityItems + 1;
+        menuHealthScore = menuHealthScore + item.healthScore;
+        let average = menuHealthScore / quantityItems;
+        console.log('average :>> ', average);
+
+      return average
+    })
   }
 
   const onAddToMenu = (dishes) => {
@@ -72,7 +113,10 @@ const MenuProvider = ({children}) => {
         removeDish,
         dishesList,
         getDishesList,
-        searchDishesByQuery
+        searchDishesByQuery,
+        averageMenuPrice,
+        averageMenuPreparation,
+        averageMenuHealthScore
         }}>
         {children}
       </MenuContext.Provider>
