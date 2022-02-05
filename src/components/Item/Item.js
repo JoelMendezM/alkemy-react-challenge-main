@@ -9,7 +9,7 @@ export const Item = ( {dishes, appearButton = {'d-none': false}, disapeartButton
   const wraperrClassesDetailButton = className('btn btn-primary', disapeartButton);
   const wraperrClassesDeleteButton = className('btn btn-danger', disapeartButton);
   const wraperrClassesAddMenuButton = className('btn btn-primary', appearButton);
-
+  console.log('dishes :>> ', dishes);
   return (
     <>
       <DishesContainer>
@@ -19,6 +19,9 @@ export const Item = ( {dishes, appearButton = {'d-none': false}, disapeartButton
                 <img src={dishes.image} className="card-img-top" alt="..."/>
                 <div className="card-body">
                   <h5 className="card-title">{dishes.title}</h5>
+                  <p className="card-text"><b>Precio por porción: </b>{dishes.pricePerServing}</p>
+                  <p className="card-text"><b>Tiempo de preparación (min): </b>{dishes.readyInMinutes}</p>
+                  <p className="card-text"><b>Health Score: </b>{dishes.healthScore}</p>
                   <p className="card-text"><b>Apto vegano: </b>{dishes.vengan === true ? 'si' : 'no'}</p>
                   <p className="card-text"><b>Vegetariano: </b>{dishes.vegetarian === true ? 'si' : 'no'}</p>
                   <p className="card-text"><b>Apto celíaco: </b>{dishes.glutenFree === true ? 'si' : 'no'}</p>
