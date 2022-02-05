@@ -1,6 +1,11 @@
 import React from 'react';
+import { useMenu } from '../../context/MenuContext'
 
 export const MenuSummary = () => {
+  const { averageMenuPrice } = useMenu();
+
+  averageMenuPrice();
+
   return (
     <>
       <div>
