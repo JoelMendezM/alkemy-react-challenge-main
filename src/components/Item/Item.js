@@ -2,10 +2,11 @@ import React from 'react';
 import { useMenu } from '../../context/MenuContext';
 import { DishesContainer, CardDish, Button } from '../StyleComponents/Style';
 import className from 'classnames';
+import { NavLink } from 'react-router-dom';
+
 
 export const Item = ( {dishes, appearButton = {'d-none': false}, disapeartButton = {'d-none': true}} ) => {
   const { onAddToMenu, removeDish } = useMenu();
-
   const wraperrClassesDetailButton = className('btn btn-primary', disapeartButton);
   const wraperrClassesDeleteButton = className('btn btn-danger', disapeartButton);
   const wraperrClassesAddMenuButton = className('btn btn-primary', appearButton);
@@ -25,7 +26,7 @@ export const Item = ( {dishes, appearButton = {'d-none': false}, disapeartButton
                   <p className="card-text"><b>Apto vegano: </b>{dishes.vengan === true ? 'si' : 'no'}</p>
                   <p className="card-text"><b>Vegetariano: </b>{dishes.vegetarian === true ? 'si' : 'no'}</p>
                   <p className="card-text"><b>Apto celíaco: </b>{dishes.glutenFree === true ? 'si' : 'no'}</p>
-                  <Button className={wraperrClassesDetailButton}>Detalle del plato</Button>
+                  <NavLink to={`/itemDetail/${dishes.id}`} className={wraperrClassesDetailButton} >Detalle del plato</NavLink>
                   <Button className={wraperrClassesDeleteButton} onClick={() => removeDish()}>Eliminar</Button>
                   <Button className={wraperrClassesAddMenuButton} onClick={() => onAddToMenu(dishes)}>Añadir al menú</Button>
                 </div>

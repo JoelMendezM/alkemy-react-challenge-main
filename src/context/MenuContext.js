@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import swal from 'sweetalert';
-import { getDishes, searchDishes } from '../services/items';
+import { getDishes, searchDishes, getDish } from '../services/items';
 
 const MenuContext = React.createContext();
 
@@ -15,7 +15,11 @@ const useMenu = () => {
 const MenuProvider = ({children}) => {
   const [menu, setMenu] = useState([]);
   const [dishesList, setDishesList] = useState([]);
+<<<<<<< HEAD
   const [averagePrice, setAveragePrice] = useState(0);
+=======
+  const [dish, setDish] = useState([]);
+>>>>>>> a5c2e6398f6e10447b306715da9be4e9b92ab9ef
   
   console.log('menu :>> ', menu);
 
@@ -41,6 +45,7 @@ const MenuProvider = ({children}) => {
       })
   }
 
+<<<<<<< HEAD
   const averageMenuPrice = () => {
     let menuPrice = 0;
     let quantityItems = 0;
@@ -78,6 +83,13 @@ const MenuProvider = ({children}) => {
 
       return average
     })
+=======
+  const getDishById = (id) => {
+    getDish(id)
+      .then((res) => {
+        setDish(res);
+      })
+>>>>>>> a5c2e6398f6e10447b306715da9be4e9b92ab9ef
   }
 
   const onAddToMenu = (dishes) => {
@@ -91,6 +103,7 @@ const MenuProvider = ({children}) => {
         price: dishes.pricePerServing,
         timePreparation: dishes.readyInMinutes,
         healthScore: dishes.healthScore,
+        summary: dishes.summary
       }
 
     setMenu((previousState) => [...previousState, dishAddToMenu]);
@@ -114,9 +127,14 @@ const MenuProvider = ({children}) => {
         dishesList,
         getDishesList,
         searchDishesByQuery,
+<<<<<<< HEAD
         averageMenuPrice,
         averageMenuPreparation,
         averageMenuHealthScore
+=======
+        getDishById,
+        dish
+>>>>>>> a5c2e6398f6e10447b306715da9be4e9b92ab9ef
         }}>
         {children}
       </MenuContext.Provider>
