@@ -28,7 +28,7 @@ export const Item = ( {
                   <p className={wraperParagrah}><b>Precio por porción: </b>{dish.pricePerServing}</p>
                   <p className={wraperParagrah}><b>Tiempo de preparación (min): </b>{dish.readyInMinutes}</p>
                   <p className={wraperParagrah}><b>Health Score: </b>{dish.healthScore}</p>
-                  <p className="card-text"><b>Apto vegano: </b>{dish.vengan === true ? 'si' : 'no'}</p>
+                  <p className="card-text"><b>Apto vegano: </b>{dish.vegan === true ? 'si' : 'no'}</p>
                   <p className="card-text"><b>Vegetariano: </b>{dish.vegetarian === true ? 'si' : 'no'}</p>
                   <p className="card-text"><b>Apto celíaco: </b>{dish.glutenFree === true ? 'si' : 'no'}</p>
                   <NavLink to={`/item/detail/${dish.id}`} className={wraperrClassesDetailButton} >Detalle del plato</NavLink>
