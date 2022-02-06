@@ -17,6 +17,7 @@ const MenuProvider = ({children}) => {
   const [dishesList, setDishesList] = useState([]);
   const [dish, setDish] = useState([]);
   
+  console.log('menu :>> ', menu);
 
   if (menu.length >= 5) {
     swal(
@@ -47,30 +48,38 @@ const MenuProvider = ({children}) => {
       })
   }
 
-  const onAddToMenu = (dishes) => {
-    const dishAddToMenu = {
-        id: dishes.id,
-        title: dishes.title,
-        image: dishes.image,
-        vegan: dishes.vegan,
-        vegetarian: dishes.vegetarian,
-        celiac: dishes.glutenFree,
-        price: dishes.pricePerServing,
-        timePreparation: dishes.readyInMinutes,
-        healthScore: dishes.healthScore,
-        summary: dishes.summary
+  const onAddToMenu = (dish) => {
+    let isANewDish = true;
+
+    menu.forEach((element) => {
+      if (element.id === dish.id) {
+        isANewDish = false;
       }
+    });
 
-    setMenu((previousState) => [...previousState, dishAddToMenu]);
-  }
+    if (!isANewDish) {
+      return;
+    }
 
-  const removeDish = (index) => {
-    menu.splice(index, 1);
+    const newDish = {
+      id: dish.id,
+      title: dish.title,
+      image: dish.image,
+      vegan: dish.vegan,
+      vegetarian: dish.vegetarian,
+      celiac: dish.glutenFree,
+      price: dish.pricePerServing,
+      timePreparation: dish.readyInMinutes,
+      healthScore: dish.healthScore,
+      summary: dish.summary
+    }
+    console.log('agregue un nuevo plato :>> ',  newDish);
+    setMenu((previousState) => [...previousState, newDish]);
+  };
 
-    let updatingMenu = menu.map((dish) => {
-      return {...dish}
-    })
-    setMenu(updatingMenu);
+  const removeDish = (id) => {
+    const newMenu = menu.filter((dish) => dish.id !== id)
+    setMenu(newMenu);
    }
 
   return (
@@ -83,7 +92,7 @@ const MenuProvider = ({children}) => {
         getDishesList,
         searchDishesByQuery,
         getDishById,
-        dish
+        dish,
         }}>
         {children}
       </MenuContext.Provider>
