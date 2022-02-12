@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import swal from 'sweetalert';
-import { getDishes, searchDishes } from '../services/items';
+import { getDishes, searchDishes, getDish } from '../services/items';
 
 const MenuContext = React.createContext();
 
@@ -15,7 +15,9 @@ const useMenu = () => {
 const MenuProvider = ({children}) => {
   const [menu, setMenu] = useState([]);
   const [dishesList, setDishesList] = useState([]);
+  const [dish, setDish] = useState([]);
   
+  console.log('menu :>> ', menu);
 
   if (menu.length >= 5) {
     swal(
@@ -39,29 +41,45 @@ const MenuProvider = ({children}) => {
       })
   }
 
-  const onAddToMenu = (dishes) => {
-    const dishAddToMenu = {
-        id: dishes.id,
-        title: dishes.title,
-        image: dishes.image,
-        vegan: dishes.vegan,
-        vegetarian: dishes.vegetarian,
-        celiac: dishes.glutenFree,
-        price: dishes.pricePerServing,
-        timePreparation: dishes.readyInMinutes,
-        healthScore: dishes.healthScore,
-      }
-
-    setMenu((previousState) => [...previousState, dishAddToMenu]);
+  const getDishById = (id) => {
+    getDish(id)
+      .then((res) => {
+        setDish(res);
+      })
   }
 
-  const removeDish = (index) => {
-    menu.splice(index, 1);
+  const onAddToMenu = (dish) => {
+    let isANewDish = true;
 
-    let updatingMenu = menu.map((dish) => {
-      return {...dish}
-    })
-    setMenu(updatingMenu);
+    menu.forEach((element) => {
+      if (element.id === dish.id) {
+        isANewDish = false;
+      }
+    });
+
+    if (!isANewDish) {
+      return;
+    }
+
+    const newDish = {
+      id: dish.id,
+      title: dish.title,
+      image: dish.image,
+      vegan: dish.vegan,
+      vegetarian: dish.vegetarian,
+      celiac: dish.glutenFree,
+      price: dish.pricePerServing,
+      timePreparation: dish.readyInMinutes,
+      healthScore: dish.healthScore,
+      summary: dish.summary
+    }
+    console.log('agregue un nuevo plato :>> ',  newDish);
+    setMenu((previousState) => [...previousState, newDish]);
+  };
+
+  const removeDish = (id) => {
+    const newMenu = menu.filter((dish) => dish.id !== id)
+    setMenu(newMenu);
    }
 
   return (
@@ -72,7 +90,9 @@ const MenuProvider = ({children}) => {
         removeDish,
         dishesList,
         getDishesList,
-        searchDishesByQuery
+        searchDishesByQuery,
+        getDishById,
+        dish,
         }}>
         {children}
       </MenuContext.Provider>

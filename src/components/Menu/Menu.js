@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuContainer } from '../StyleComponents/Style';
 import { useMenu } from '../../context/MenuContext';
 import { Item } from '../Item/Item';
+import { MenuSummary } from '../MenuSummary/MenuSummary';
 
 export const Menu = () => {
   const { menu } = useMenu();
@@ -21,9 +22,12 @@ export const Menu = () => {
         <Item dishes={menu} 
         key={menu.id} 
         disapeartButton={{'d-none': false}} 
-        appearButton={{'d-none': true}}/>
+        appearButton={{'d-none': true}}
+        disapearParagrah={{'d-none': true}}/>
+        
       </>
-    }
+      }
+      <MenuSummary/>
     </MenuContainer>
 
   ) 
