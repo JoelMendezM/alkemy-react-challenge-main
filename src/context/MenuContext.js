@@ -16,16 +16,8 @@ const MenuProvider = ({children}) => {
   const [menu, setMenu] = useState([]);
   const [dishesList, setDishesList] = useState([]);
   const [dish, setDish] = useState([]);
-  
-  console.log('menu :>> ', menu);
-
-  if (menu.length >= 5) {
-    swal(
-      '¡El menú esta COMPLETO!',
-      'Para cambiar un plato, debe eliminar al menos un plato del menú'
-    );
-    menu.splice(4,1);
-  }
+  const [veganDishCounting, setVeganDishCounting] = useState(0);
+  const [noVeganDishCounting, setNoVeganDishCounting] = useState(0);
 
   const searchDishesByQuery = (query) => {
     searchDishes(query)
@@ -50,15 +42,28 @@ const MenuProvider = ({children}) => {
 
   const onAddToMenu = (dish) => {
     let isANewDish = true;
+    let isAVeganDish = false;
 
     menu.forEach((element) => {
       if (element.id === dish.id) {
+        swal(
+          '¡Este plato ya fue AGREGADO al menu!',
+          'Por favor elija una opción diferente'
+        );
         isANewDish = false;
       }
-    });
 
+    });
+    
     if (!isANewDish) {
       return;
+    }
+    
+    if(menu.length === 4) {
+      swal(
+        '¡El menú esta COMPLETO!',
+        'Para cambiar un plato, debe eliminar al menos un plato del menú'
+      );
     }
 
     const newDish = {
@@ -73,8 +78,32 @@ const MenuProvider = ({children}) => {
       healthScore: dish.healthScore,
       summary: dish.summary
     }
-    console.log('agregue un nuevo plato :>> ',  newDish);
-    setMenu((previousState) => [...previousState, newDish]);
+    
+    if (newDish.vegan) {
+      setVeganDishCounting(veganDishCounting + 1);
+      isAVeganDish = true;
+      if (veganDishCounting === 2) {
+        swal(
+          '¡Solo pueden haber hasta DOS platos VEGANOS en el menu!',
+          'Por favor escoja una opción no vegana'
+        );
+      } else {
+        setNoVeganDishCounting(noVeganDishCounting + 1)
+        if (noVeganDishCounting === 2) {
+        swal(
+          '¡Solo pueden haber hasta DOS platos NO VEGANOS en el menu!',
+          'Por favor escoja una opción vegana'
+        );
+        }
+      }
+    }
+    if(veganDishCounting < 2 && isAVeganDish === true) {
+      setMenu((previousState) => [...previousState, newDish]);
+
+      return;
+      } else if (noVeganDishCounting < 2 && isAVeganDish === false) {
+        setMenu((previousState) => [...previousState, newDish]);
+      }
   };
 
   const removeDish = (id) => {
