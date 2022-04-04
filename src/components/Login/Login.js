@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { Spinner, Container } from '../StyleComponents/Style'
+import { useNavigate } from 'react-router-dom';
+
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState(false);
   const [processingLogin, setProcessingLogin] = useState(false);
 
   const handleLogin = () => {
     setProcessingLogin(true);
-    //
-
-    setTimeout(() => {
+    
       axios
         .post('http://challenge-react.alkemy.org/', {
           email: email,
@@ -21,21 +22,17 @@ export const Login = () => {
         })
         .then(function (response) {
           localStorage.setItem('token', response.data.token);
-          console.log(response.data.token);
+          navigate('/');
         })
         .catch(function (error) {
-          console.log(error);
-        })
-        .finally(() => {
           if (!(email === 'challenge@alkemy.org') && !(password === 'react')) {
             swal(
               '¡ERROR! email y/o password inválido',
-              'Por favor introduzca el email y/o password correctamente'
+              'Por favor introduzca un email y/o password autorizado para el login'
             );
           }
           setProcessingLogin(false);
-        });
-    }, 2500);
+        })
   };
 
   return (
@@ -68,10 +65,6 @@ export const Login = () => {
         onSubmit={(inputValues, { resetForm }) => {
           resetForm();
           handleLogin();
-
-          console.log('formulario enviado');
-          console.log('password', password);
-          console.log('email', email);
         }}>
         {({ handleSubmit, errors, touched, values, handleChange, handleBlur }) => (
           <>
@@ -82,7 +75,7 @@ export const Login = () => {
               </p>
             </div>
             <form className="container" onSubmit={handleSubmit}>
-              <div className="mb-3">
+              <div>
                 <label htmlFor="exampleInputEmail1" className="form-label">
                   Email
                 </label>
@@ -97,9 +90,9 @@ export const Login = () => {
                   onBlur={handleBlur}
                 />
               </div>
-              {touched.email && errors.email && <div>{errors.email}</div>}
-              <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">
+              {touched.email && errors.email && <p className='m-0 ms-2 text-danger'>{errors.email}</p>}
+              <div>
+                <label htmlFor="exampleInputPassword1" className="form-label mt-2">
                   Password
                 </label>
                 <input
@@ -112,11 +105,15 @@ export const Login = () => {
                   onBlur={handleBlur}
                 />
               </div>
-              {touched.password && errors.password && <div>{errors.password}</div>}
-              <button type="submit" className="btn btn-primary">
-                Enviar
-              </button>
-              {processingLogin && <div>Procesando petición, aguarde un momento por favor</div>}
+              {touched.password && errors.password && <p className='m-0 ms-2 text-danger'>{errors.password}</p>}
+              <Container>
+                <button type="submit" className="btn btn-primary mt-2" disabled={processingLogin}>
+                  Enviar
+                </button>
+                {processingLogin && <Spinner className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+                </Spinner>}
+              </Container>
             </form>
           </>
         )}

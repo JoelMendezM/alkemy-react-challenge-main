@@ -1,29 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
+import { SearchFormContainer } from '../StyleComponents/Style';
+import { useMenu } from '../../context/MenuContext';
+import { Label } from '../StyleComponents/Style';
 
 export const DishesSearch = () => {
-  const [searching, setSearching] = useState('')
+  const { searchDishesByQuery } = useMenu();
 
   return (
     <>
       <Formik
-        initialValues={{searchValue: searching}}
+        initialValues={{searchValue: ''}}
+        
+        onSubmit={(values, { resetForm }) => {
+          if(values.searchValue.length >= 2) {
+            let query = values.searchValue.toLowerCase();
+            searchDishesByQuery(query);
+          }
+          resetForm();
+        }}
       >
-        {({handleChange, handleSubmit})=> {
+        {({handleChange, handleSubmit, values})=> (
           <div>
-            <form onSubmit={handleSubmit}>
-              <label className='form-label'>Buscador de platos</label>
+            <SearchFormContainer onSubmit={handleSubmit}>
+              <Label className='form-label'>Buscador de platos: </Label>
               <input
               type='text'
               id='searching'
+              name='searchValue'
+              value={values.searchValue}
+              placeholder='ej: Broccoli'
               onChange={handleChange}/>
-              {console.log(searching)}
-            </form>
+            </SearchFormContainer>
           </div>
-        }}
+        )}
       </Formik>
     </>
   )
 };
-
- 

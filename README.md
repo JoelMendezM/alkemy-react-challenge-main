@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# Alkemy Challenge - Menu Creator App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The challenge-project it is based on a menu creator app for hotels, you can choose at least 4 options from a dishes list and compare differences averages: price, health score and time preparation 
+## Login required
 
-## Available Scripts
+#### Obtain a token access with the body request:
+##### Email: challenge@alkemy.org
+##### Password: react
 
-In the project directory, you can run:
 
-### `npm start`
+```http
+  POST http://challenge-react.alkemy.org/
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## API Reference
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+https://spoonacular.com/food-api/docs#Search-Recipes-Complex
 
-### `npm test`
+#### Get all dishes with a recipe information
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```http
+  GET https://api.spoonacular.com/recipes/complexSearch?apiKey=e5efa520d806449eb6185b9de8fdcf64&addRecipeInformation=true
+```
 
-### `npm run build`
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `apiKey` | `string` | **e5efa520d806449eb6185b9de8fdcf64** |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Search dishes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```http
+  GET https://api.spoonacular.com/recipes/complexSearch?apiKey=e5efa520d806449eb6185b9de8fdcf64&addRecipeInformation=true&query=${query}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `query`      | `string` | **Query parameter to fetch**. |
 
-### `npm run eject`
+#### Get dish by Id
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```http
+  GET https://api.spoonacular.com/recipes/${id}/information?apiKey=e5efa520d806449eb6185b9de8fdcf64&includeNutrition=false
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Id parameter to fetch** |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Packages installed
 
-## Learn More
+These are all packages used into the project
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+  react, react-router-dom, axios, formik, classnames, styled-components, sweetalert
+```
+    
+## Deployment
 
-### Code Splitting
+To deploy the project you should have installed node Js and execute the code below:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+  npm run start
+```
 
-### Analyzing the Bundle Size
+## Services usage (items.js)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```javascript
+"item.js" contain the calls API like a functions, the created functions are:
 
-### Making a Progressive Web App
+- getDishes()       - searchDishes(query = '')       - getDish(id)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+These functions are used in the context
+```
 
-### Advanced Configuration
+## Feedback
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+If you have any feedback about this project, please let me know and then I will improve it. You can send me an email to: 
+joel.j.mendez.m@gmail.com
 
-### Deployment
+## 🚀 About Me
+I'm a front-end developer working every day to be magnificent developer and will never stop untill get it (infinity loop)...
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Take a look to my github repository: https://github.com/JoelMendezM
 
-### `npm run build` fails to minify
+If you have any comment, advice, critic or something else, please do not hesitate to contact me at:
+joel.j.mendez.m@gmail.com
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
