@@ -6,7 +6,7 @@ export const NavBar = () => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <NavLink className="navbar-brand" to="/home">
+          <NavLink className="navbar-brand" to="/">
             Alkemy Labs
           </NavLink>
           <button
