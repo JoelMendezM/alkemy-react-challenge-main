@@ -4,11 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { MenuProvider } from './context/MenuContext';
+import { ChakraProvider } from '@chakra-ui/react';
+
 
 ReactDOM.render(
   <React.StrictMode>
     <MenuProvider>
-      <App />
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
     </MenuProvider>
   </React.StrictMode>,
   document.getElementById('root')
