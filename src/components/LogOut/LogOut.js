@@ -1,30 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMenu } from "../../context/MenuContext";
 
 export const LogOut = () => {
-    const [isUserLogged, setIsUserLogged] = useState(true);
-    const navigate = useNavigate();
-    
-    const handleLogOut = () => {
-        localStorage.clear();
-        setIsUserLogged(false);
-    }
+  const { isLogged, setIsLogged } = useMenu();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isUserLogged === false) {
-            navigate('/login')
-        }
-    },[isUserLogged])
+  const handleLogOut = () => {
+    localStorage.clear();
+    setIsLogged(localStorage.length);
+    navigate("/login");
+  };
 
-    return <>
-        {localStorage.length > 0 ?
-        <button className="nav-link" onClick={handleLogOut}>LogOut</button> :
-        <NavLink className="nav-link" to="/login">
-            Login
-        </NavLink>
-        }
-    </> 
+  useEffect(() => {}, [isLogged]);
 
-
-}
+  return (
+    <>
+      <button className="nav-link" onClick={handleLogOut}>
+        LogOut
+      </button>
+    </>
+  );
+};
