@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { Formik } from "formik";
-import axios from "axios";
-import swal from "sweetalert";
+import axios from 'axios';
+import swal from 'sweetalert';
 import { Spinner, Container } from "../StyleComponents/Style";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { useMenu } from "../../context/MenuContext";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Stack,
+  Heading,
+  Text,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 
 export const Login = () => {
   const { setIsLogged } = useMenu();
@@ -12,6 +24,36 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [processingLogin, setProcessingLogin] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validate: (inputValue) => {
+        let inputErrors = {};
+
+        //Email validation
+        if (!inputValue.email) {
+          inputErrors.email = 'Campo "Email" no puede estar vacío por favor escriba un correo';
+        } else if (inputValue.email === 'challenge@alkemy.org') {
+          setEmail(inputValue.email);
+        }
+
+        //Password validation
+        if (!inputValue.password) {
+          inputErrors.password =
+            'Campo "Password" no puede estar vacío por favor escriba una contraseña';
+        } else if (inputValue.password === 'react') {
+          setPassword(inputValue.password);
+        }
+
+        return inputErrors;
+      },
+      onSubmit: (inputValues, { resetForm }) => {
+        handleLogin();
+        resetForm();
+      }
+  })
 
   const handleLogin = () => {
     setProcessingLogin(true);
@@ -139,9 +181,9 @@ export const Login = () => {
                 )}
               </Container>
             </form>
-          </>
-        )}
-      </Formik>
+          </Box>
+        </Stack>
+      </Flex>
     </>
   );
 };
